@@ -1,15 +1,16 @@
 from math import lcm
+from egcd import egcd
 from typing import Tuple
 from sympy import randprime
 
 
 class RSA:
     def __init__(self):
-        self.__p = 61#self.rand_large_prime()
-        self.__q = 53#self.rand_large_prime()
+        self.__p = self.rand_large_prime()
+        self.__q = self.rand_large_prime()
         self.__n = self.__p * self.__q
         self.__totient = self.prime_ctotient(self.__p, self.__q)
-        self.__e = 17#self.__compute_e()
+        self.__e = self.__compute_e()
         self.__private_key = self.__compute_key()
 
     def get_public_key(self) -> Tuple[int, int]:
@@ -43,9 +44,15 @@ class RSA:
     
     def __compute_key(self) -> int:
         """
-        Computes the key (d)
+        Computes the key (d) by using the extended euclidean
+        algorithm to find a value x (_, x, _) and then returning
+        x mod the totient.
+        The EEU returns the GCD, and the two coefficients to Bezout's
+        identity, revealing the modular multiplicative inverse as
+        the first coefficient. 
         """
-        return (1 % self.__totient) / self.__e
+        _, x, _ = egcd(self.__e, self.__totient)
+        return x % self.__totient
         
     @staticmethod
     def rand_large_prime() -> int:
