@@ -18,7 +18,7 @@ class RSA:
         Returns the public key, (n, e).
         """
         return (self.__n, self.__e)
-    
+
     @staticmethod
     def encrypt(m: int, key: Tuple[int, int]) -> int:
         """
@@ -28,20 +28,20 @@ class RSA:
         n = key[0]
         e = key[1]
         return (m ** e) % n 
-    
+
     def decrypt(self, c: int) -> int:
         """
         Decrypts c to find m such that
         m = c^d mod n
         """
         return (c**self.__private_key) % self.__n
-        
+  
     def __compute_e(self) -> int:
         e = self.__totient
         while self.__totient % e == 0: # while e not coprime to tot
             e = randprime(2, self.__totient)
         return e
-    
+
     def __compute_key(self) -> int:
         """
         Computes the key (d) by using the extended euclidean
@@ -53,14 +53,14 @@ class RSA:
         """
         _, x, _ = egcd(self.__e, self.__totient)
         return x % self.__totient
-        
+   
     @staticmethod
     def rand_large_prime() -> int:
         """
         Gnerate a random large prime number     
         """
         return randprime(64, 256)
-    
+
     @staticmethod
     def prime_ctotient(p: int, q: int) -> int:
         """
@@ -68,10 +68,10 @@ class RSA:
         n = pq where p and q are prime numbers.
         """
         return lcm(p - 1, q - 1)
-    
+
     def debug(self):
         print(self.__n, self.__totient, self.__private_key)
-    
+
 
 if __name__ == "__main__":
     print("Running...")
