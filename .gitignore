@@ -11,3 +11,7 @@ Cargo.lock
 
 # Python compiled binaries
 *.pyc
+
+# Added by cargo
+
+/target

@@ -6,8 +6,8 @@ from sympy import randprime
 
 class RSA:
     def __init__(self):
-        self.__p = self.rand_large_prime()
-        self.__q = self.rand_large_prime()
+        self.__p = 73#self.rand_large_prime()
+        self.__q = 103#self.rand_large_prime()
         self.__n = self.__p * self.__q
         self.__totient = self.prime_ctotient(self.__p, self.__q)
         self.__e = self.__compute_e()
@@ -70,7 +70,7 @@ class RSA:
         return lcm(p - 1, q - 1)
 
     def debug(self):
-        print(self.__n, self.__totient, self.__private_key)
+        print(self.__n, self.__totient, self.__private_key, self.__e)
 
 
 if __name__ == "__main__":
@@ -87,5 +87,5 @@ if __name__ == "__main__":
     encrypted = RSA.encrypt(message, A_key)
     decrypted = A.decrypt(encrypted)
     
-    print(message, decrypted)
+    print(message, encrypted, decrypted)
     assert message == decrypted
